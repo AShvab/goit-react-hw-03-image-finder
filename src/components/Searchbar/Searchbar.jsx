@@ -4,7 +4,7 @@ import {  toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { ImSearch } from 'react-icons/im';
 
-export default class SearchBar extends Component {
+export default class Searchbar extends Component {
   state = {
     pictureName: '',
   };
@@ -46,6 +46,6 @@ export default class SearchBar extends Component {
   }
 }
 
-SearchBar.propTypes = {
+Searchbar.propTypes = {
   onSubmit: PropTypes.func.isRequired,
 };
