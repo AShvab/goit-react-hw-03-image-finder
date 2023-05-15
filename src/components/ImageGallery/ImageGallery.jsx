@@ -1,1 +1,0 @@
-// import fetchImages from 'API';
