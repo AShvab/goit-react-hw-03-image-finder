@@ -13,29 +13,37 @@ export class ImageGallery extends Component {
     error: null,
     status: 'idle',
     page: 1,
+    isEndOfListReached: false,
   };
 
-  async componentDidUpdate(prevProps, _) {
+  async componentDidUpdate(prevProps, prevState) {
     const prevSearchQuery = prevProps.pictureName;
     const nextSearchQuery = this.props.pictureName;
 
     if (prevSearchQuery !== nextSearchQuery) {
-      this.setState({ status: 'pending', page: 1 });
+      this.setState({ status: 'pending', page: 1, isEndOfListReached: false });
 
       try {
-        const { hits, total } = await fetchImages(nextSearchQuery, 1);
+        const { hits, total, totalHits } = await fetchImages(
+          nextSearchQuery,
+          1
+        );
 
         if (total === 0) {
-          this.setState({ error: new Error('Sorry, we found no images'), status: 'rejected' });
-          return;
+          this.setState({
+            error: new Error('Sorry, we found no images'),
+            status: 'rejected',
+          });
+          return toast.error('Sorry, we found no images');
         }
 
-        this.setState(prevState => {
-          return {
-            gallery: hits,
-            status: 'resolved',
-            page: prevState.page + 1,
-          };
+        const isEndOfListReached = totalHits / 12 <= 1;
+
+        this.setState({
+          gallery: hits,
+          status: 'resolved',
+          page: 2,
+          isEndOfListReached,
         });
       } catch (error) {
         this.setState({ error, status: 'rejected' });
@@ -44,32 +52,37 @@ export class ImageGallery extends Component {
   }
 
   loadMoreHandler = async () => {
+    const { pictureName } = this.props;
+    const { page } = this.state;
+
     try {
-      const { hits } = await fetchImages(
-        this.props.pictureName,
-        this.state.page
-      );
-      this.setState(prevState => {
-        return {
-          gallery: [...prevState.gallery, ...hits],
-          page: prevState.page + 1,
-        };
-      });
+      const { hits, totalHits } = await fetchImages(pictureName, page);
+
+      if (hits.length === 0) {
+        this.setState({ isEndOfListReached: true });
+        return;
+      }
+
+      const isEndOfListReached = totalHits / 12 <= page;
+
+      this.setState(prevState => ({
+        gallery: [...prevState.gallery, ...hits],
+        page: prevState.page + 1,
+        isEndOfListReached,
+      }));
     } catch (error) {
       this.setState({ error, status: 'rejected' });
-      return;
     }
   };
 
   render() {
-    const { gallery, error, status } = this.state;
+    const { gallery, status, isEndOfListReached } = this.state;
 
     if (status === 'pending') {
       return <Loader />;
     }
 
     if (status === 'rejected') {
-      toast.error(`Error: ${error.message}`);
       return null;
     }
 
@@ -86,7 +99,9 @@ export class ImageGallery extends Component {
               />
             ))}
           </Gallery>
-          <Button onClick={this.loadMoreHandler}>Load more</Button>
+          {!isEndOfListReached && (
+            <Button onClick={this.loadMoreHandler}>Load more</Button>
+          )}
         </>
       );
     }
