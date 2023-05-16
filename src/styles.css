@@ -178,7 +178,7 @@ img {
 }
 
 /*
-* Стили компонента Buton (Load more)
+* Стили компонента Button (Load more)
 */
 .Button {
   padding: 8px 16px;
@@ -205,3 +205,5 @@ img {
 .Button:focus {
   background-color: #303f9f;
 }
+
+

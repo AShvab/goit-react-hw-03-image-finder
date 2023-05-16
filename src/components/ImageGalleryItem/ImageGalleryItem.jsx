@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import { Component } from "react";
-import Modal from '../Modal';
+import Modal from '../Modal/Modal';
+import { Img, Item } from './ImageGalleryItem.styled';
 
 export class ImageGalleryItem extends Component {
     state = {
@@ -17,12 +18,12 @@ export class ImageGalleryItem extends Component {
         const { url, alt, largeImage } = this.props
         return (
             <>
-            <li onClick={this.toggleModal}>
-                <img
+            <Item onClick={this.toggleModal}>
+                <Img
                     src={url}
                     alt={alt}
-                    loading="lazy" />
-                </li>
+                    />
+                </Item>
                 {this.state.isShowModal &&
                     <Modal onClose={this.toggleModal}>
                         <img alt={alt} src={largeImage}/>

@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { ButtonLoad } from './Button.styled';
 
 export const Button = ({ children, onClick }) => { 
     return (
-        <button type="button" onClick={onClick} aria-label="Load more">
+        <ButtonLoad type="button" onClick={onClick} aria-label="Load more">
             {children}
-        </button>
+        </ButtonLoad>
     )
 }
 

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import {  toast } from 'react-toastify';
 // import 'react-toastify/dist/ReactToastify.css';
 import { ImSearch } from 'react-icons/im';
+import { Button, Input, SearchbarForm, SearchbarHeader } from './Searchbar.styled';
 
 class Searchbar extends Component {
   state = {
@@ -25,23 +26,22 @@ class Searchbar extends Component {
 
   render() {
     return (
-      <header className="searchBar">
-        <form className="form" onSubmit={this.handleSubmit}>
-          <button type="submit" className="button">
-            <ImSearch  />
-          </button>
+      <SearchbarHeader>
+        <SearchbarForm onSubmit={this.handleSubmit}>
+          <Button type="submit" aria-label="Search">
+            <ImSearch size={28}/>
+          </Button>
 
-          <input
+          <Input
             onChange={this.handleSearchChange}
             value={this.state.pictureName}
-            className="input"
             type="text"
             autoComplete="off"
             autoFocus
             placeholder="Search images and photos"
           />
-        </form>
-      </header>
+        </SearchbarForm>
+      </SearchbarHeader>
     );
   }
 }

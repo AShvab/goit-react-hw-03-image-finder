@@ -1,6 +1,7 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import { createPortal } from 'react-dom';
 import PropTypes from 'prop-types';
+import { Overlay, ModalDiv } from './Modal.styled';
 
 
 const modalRoot = document.querySelector('#modal-root');
@@ -28,9 +29,9 @@ class Modal extends Component {
 
   render() {
     return createPortal(
-      <div  onClick={this.handleBackdropClick}>
-        <Modal>{this.props.children} </Modal>
-      </div>,
+      <Overlay  onClick={this.handleBackdropClick}>
+        <ModalDiv>{this.props.children} </ModalDiv>
+      </Overlay>,
       modalRoot
     );
   }
