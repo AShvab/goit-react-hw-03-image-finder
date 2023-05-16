@@ -16,3 +16,5 @@ export const Loader = () => {
     </Wrap>
   );
 };
+ 
+export default Loader;

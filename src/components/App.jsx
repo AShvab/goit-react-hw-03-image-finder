@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { ToastContainer } from 'react-toastify';
-import SearchBar from './Searchbar';
+import 'react-toastify/dist/ReactToastify.css';
+import Searchbar from './Searchbar/Searchbar';
+import { ImageGallery } from './ImageGallery/ImageGallery';
 
 
 class App extends Component {
@@ -15,12 +17,13 @@ class App extends Component {
 
     return (
       <div>
-              {/* onSubmit - передача аргумента в функцію */}
-        <SearchBar onSubmit={this.handleFormSubmit}/>
-        <ToastContainer autoClose={2000} position="top-center" theme="colored"/>
+        <Searchbar onSubmit={this.handleFormSubmit} />
+        <ImageGallery pictureName={this.state.pictureName} />
+        <ToastContainer autoClose={2000} position="top-center" />
       </div>
     );
   }
 } 
 
 export default App;
+

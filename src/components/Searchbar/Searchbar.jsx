@@ -1,10 +1,10 @@
-import { Component } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import {  toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+// import 'react-toastify/dist/ReactToastify.css';
 import { ImSearch } from 'react-icons/im';
 
-export default class Searchbar extends Component {
+class Searchbar extends Component {
   state = {
     pictureName: '',
   };
@@ -49,3 +49,5 @@ export default class Searchbar extends Component {
 Searchbar.propTypes = {
   onSubmit: PropTypes.func.isRequired,
 };
+
+export default Searchbar;
